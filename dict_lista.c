@@ -183,10 +183,10 @@ void imprimirLista (tipoNodo *lista) {
 	}
 }
 
-/*
-void guardarListaArchivo(tipoNodo *lista,char *nombre_archivo_binario){
-    File *archivo_binario=fopen(nombre_nuevo_bin,"wb");
-    File *archivo_texto=fopen(nombre_nuevo.txt,"w");
+
+void guardarListaArchivo(tipoNodo *lista,char *nombreArchivoBin){
+    FILE *archivo_binario=fopen(nombreArchivoBin,"wb");
+    FILE *archivo_texto=fopen(nombreArchivoBin,"w");
 
     char cadena[150];
     tipoNodo *p =lista;
@@ -195,14 +195,14 @@ void guardarListaArchivo(tipoNodo *lista,char *nombre_archivo_binario){
             tmpInfo= &(p->info);
             fwrite(tmpInfo,sizeof(tipoDict),1,archivo_binario);
             sprintf(cadena,"<%s>:<%s>\n",tmpInfo->palIngles,tmpInfo->palEspanol);
-            fputs(cadena,archivo_texto);
+            fputs(cadena,archivo_texto);//poner en el archivo texto
             p=p->siguiente;
     }
 
     fclose(archivo_binario);
     fclose(archivo_texto);
 }
-*/
+
 
 void menu(tipoNodo *lista){//colocar como areglos para no colcoar los &
 
@@ -220,9 +220,10 @@ void menu(tipoNodo *lista){//colocar como areglos para no colcoar los &
     char pal_modificar[50];
     //////////////////////
 
+
     do{
     printf("\n\tESTE ES EL MENU\n\tQUE DESEA REALIZAR?\n");
-	printf("\n1: Busqueda exacta\n2: adicionar palabra\n3: eliminar palabra\n4: Modificar palabra\n5: salir\n");
+	printf("\n1: Busqueda exacta\n2: adicionar palabra\n3: eliminar palabra\n4: Modificar palabra\n5: salir\n6:Guardar cambios\n");
 	scanf("%d",&opcion);
 	switch(opcion){
 		case 1:
@@ -257,6 +258,9 @@ void menu(tipoNodo *lista){//colocar como areglos para no colcoar los &
 		    printf("\n Adios y Gracias ;) \n");
 		    printf("---------------------------------------------------------");
 			break;
+        case 6:
+            guardarListaArchivo(lista,"palabras.bin");
+			break;
         default:
 			printf("\n Esta opcion no existe!\n Intentalo nuevamente. \n");
 	}
@@ -271,7 +275,7 @@ int main(){
 	lista = crearNodo(dict);                                                                                 //
 	lista = cargarDictToLista ("palabras.bin", lista);                                                       //
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-    printf("Desea ir a la opcion de busqueda inteligente (si este es el caso coloque como cree que inicie la palabra\n)\n colcoa el numero 1 si deseas , otro de lo contrario\n ");
+    printf("Desea ir a la opcion: Busqueda inteligente.\nSi es el caso, coloque como cree que inicia la palabra.\nPreciona 1 si deseas ingresar ,otro numero de lo contrario\n");
     int respuesta=0;
     scanf("%d",&respuesta);
 
@@ -301,10 +305,10 @@ int main(){
 
     }
 
-    //guardarListaArchivo(lista,"palabras.bin");
+
     menu(lista);
 
-
+    //guardarListaArchivo(lista,"palabras.bin");
 
 	return 0;
 }
