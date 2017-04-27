@@ -183,7 +183,7 @@ void imprimirLista (tipoNodo *lista) {
 	}
 }
 
-
+/*
 void guardarListaArchivo(tipoNodo *lista,char *nombreArchivoBin){
     FILE *archivo_binario=fopen(nombreArchivoBin,"wb");
     FILE *archivo_texto=fopen(nombreArchivoBin,"w");
@@ -202,7 +202,7 @@ void guardarListaArchivo(tipoNodo *lista,char *nombreArchivoBin){
     fclose(archivo_binario);
     fclose(archivo_texto);
 }
-
+*/
 
 void menu(tipoNodo *lista){//colocar como areglos para no colcoar los &
 
@@ -220,7 +220,6 @@ void menu(tipoNodo *lista){//colocar como areglos para no colcoar los &
     char pal_modificar[50];
     //////////////////////
 
-
     do{
     printf("\n\tESTE ES EL MENU\n\tQUE DESEA REALIZAR?\n");
 	printf("\n1: Busqueda exacta\n2: adicionar palabra\n3: eliminar palabra\n4: Modificar palabra\n5: salir\n6:Guardar cambios\n");
@@ -228,7 +227,7 @@ void menu(tipoNodo *lista){//colocar como areglos para no colcoar los &
 	switch(opcion){
 		case 1:
             printf("ingrese la palabra:\n");
-            scanf("%s",&pal);
+            scanf("%s",pal);
             traduccion=Buscar_palabra(pal,lista);//para buscar la palabra
             printf("---------------------------------------------------------\n");
             printf("\tLA PALABRA ES: <%s>:<%s>\n",pal,traduccion);
@@ -259,7 +258,7 @@ void menu(tipoNodo *lista){//colocar como areglos para no colcoar los &
 		    printf("---------------------------------------------------------");
 			break;
         case 6:
-            guardarListaArchivo(lista,"palabras.bin");
+            //guardarListaArchivo(lista,"palabras.bin");
 			break;
         default:
 			printf("\n Esta opcion no existe!\n Intentalo nuevamente. \n");
