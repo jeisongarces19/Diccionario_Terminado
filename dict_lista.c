@@ -183,17 +183,16 @@ void imprimirLista (tipoNodo *lista) {
 	}
 }
 
-/*
-void guardarListaArchivo(tipoNodo *lista,char *nombreArchivoBin){
-    FILE *archivo_binario=fopen(nombreArchivoBin,"wb");
-    FILE *archivo_texto=fopen(nombreArchivoBin,"w");
+void guardarListaArchivo(tipoNodo *lista){
+    FILE *archivo_binario=fopen("nombreArchivo.bin","wb");
+    FILE *archivo_texto=fopen("nombreArchivo.txt","w");
 
     char cadena[150];
     tipoNodo *p =lista;
     tipoDict *tmpInfo;
     while(p!=NULL){
             tmpInfo= &(p->info);
-            fwrite(tmpInfo,sizeof(tipoDict),1,archivo_binario);
+            fwrite(&tmpInfo,sizeof(tipoDict),1,archivo_binario);
             sprintf(cadena,"<%s>:<%s>\n",tmpInfo->palIngles,tmpInfo->palEspanol);
             fputs(cadena,archivo_texto);//poner en el archivo texto
             p=p->siguiente;
@@ -202,7 +201,7 @@ void guardarListaArchivo(tipoNodo *lista,char *nombreArchivoBin){
     fclose(archivo_binario);
     fclose(archivo_texto);
 }
-*/
+
 
 void menu(tipoNodo *lista){//colocar como areglos para no colcoar los &
 
@@ -258,7 +257,7 @@ void menu(tipoNodo *lista){//colocar como areglos para no colcoar los &
 		    printf("---------------------------------------------------------");
 			break;
         case 6:
-            //guardarListaArchivo(lista,"palabras.bin");
+            guardarListaArchivo(lista);
 			break;
         default:
 			printf("\n Esta opcion no existe!\n Intentalo nuevamente. \n");
@@ -307,7 +306,7 @@ int main(){
 
     menu(lista);
 
-    //guardarListaArchivo(lista,"palabras.bin");
+
 
 	return 0;
 }
