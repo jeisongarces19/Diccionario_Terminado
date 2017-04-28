@@ -78,6 +78,29 @@ char *Buscar_palabra(char *palabra,tipoNodo *list){//devuelve un char cuidado
 }
 
 void Buscar_palabra_inteligente(){//devuelve un char cuidado
+    FILE * Diccionario = fopen("palabras.txt","r");
+    char guardar[50];
+    char palabra[50];//lo que deseo buscar
+    printf("Digite la palabra que desea buscar: ");
+    scanf("%s",&palabra);//tomo lo que me mandan  escriben.
+    if(Diccionario==NULL){
+        printf("No se pudo leer: :( .....");
+        exit(0);
+    }
+    else{
+        while(!(feof(Diccionario))){
+            fgets(guardar,50,Diccionario);//donde se guarda,espacio,de donde lo lee.
+            char *x;
+            x=strstr(guardar,palabra);
+            if(strstr(guardar,palabra)!=NULL){//strstr
+                strtok(x," : ");
+                strtok(NULL," ");
+                printf("%s\n",x);
+            }
+        }
+    }
+    fclose(Diccionario);
+
 }
 
 int buscarPos(char *palabra,tipoNodo *lista ){
@@ -192,9 +215,10 @@ void guardarListaArchivo(tipoNodo *lista){
     tipoDict *tmpInfo;
     while(p!=NULL){
             tmpInfo= &(p->info);
-            fwrite(&tmpInfo,sizeof(tipoDict),1,archivo_binario);
+            printf ("%s:%s\n", tmpInfo->palIngles,tmpInfo->palEspanol);
+            //fwrite(tmpInfo,sizeof(tipoDict),1,archivo_binario);
             sprintf(cadena,"<%s>:<%s>\n",tmpInfo->palIngles,tmpInfo->palEspanol);
-            fputs(cadena,archivo_texto);//poner en el archivo texto
+            //fputs(cadena,archivo_texto);//poner en el archivo texto
             p=p->siguiente;
     }
 
@@ -221,7 +245,7 @@ void menu(tipoNodo *lista){//colocar como areglos para no colcoar los &
 
     do{
     printf("\n\tESTE ES EL MENU\n\tQUE DESEA REALIZAR?\n");
-	printf("\n1: Busqueda exacta\n2: adicionar palabra\n3: eliminar palabra\n4: Modificar palabra\n5: salir\n6:Guardar cambios\n");
+	printf("\n1: Busqueda exacta\n2: adicionar palabra\n3: eliminar palabra\n4: Modificar palabra\n5: salir\n6:Guardar cambios\n7:Buscar palabra inteligente.\n8:Imprimir lista\n");
 	scanf("%d",&opcion);
 	switch(opcion){
 		case 1:
@@ -259,8 +283,15 @@ void menu(tipoNodo *lista){//colocar como areglos para no colcoar los &
         case 6:
             guardarListaArchivo(lista);
 			break;
+        case 7:
+            Buscar_palabra_inteligente();
+            break;
+        case 8:
+            imprimirLista(lista);
+            break;
         default:
 			printf("\n Esta opcion no existe!\n Intentalo nuevamente. \n");
+
 	}
     }while (opcion!=5);
 }
@@ -270,39 +301,9 @@ int main(){
     tipoNodo *lista;                                                               //
 	tipoDict dict;
 	                                                                  //
-	lista = crearNodo(dict);                                                                                 //
+	lista = NULL;                                                                                 //
 	lista = cargarDictToLista ("palabras.bin", lista);                                                       //
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-    printf("Desea ir a la opcion: Busqueda inteligente.\nSi es el caso, coloque como cree que inicia la palabra.\nPreciona 1 si deseas ingresar ,otro numero de lo contrario\n");
-    int respuesta=0;
-    scanf("%d",&respuesta);
-
-    if(respuesta==1){
-        FILE * Diccionario = fopen("palabras.txt","r");
-        char guardar[50];
-        char palabra[50];//lo que deseo buscar
-        printf("Digite la palabra que desea buscar: ");
-        gets(palabra);//tomo lo que me mandan  escriben.
-        if(Diccionario==NULL){
-            printf("No se pudo leer: :( .....");
-            exit(0);
-        }
-        else{
-            while(!(feof(Diccionario))){
-                fgets(guardar,50,Diccionario);//donde se guarda,espacio,de donde lo lee.
-                char *x;
-                x=strstr(guardar,palabra);
-                if(strstr(guardar,palabra)!=NULL){//strstr
-                    strtok(x," : ");
-                    strtok(NULL," ");
-                    printf("%s\n",x);
-                }
-            }
-        }
-        fclose(Diccionario);
-
-    }
-
 
     menu(lista);
 
