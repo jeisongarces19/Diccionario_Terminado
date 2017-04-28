@@ -215,10 +215,10 @@ void guardarListaArchivo(tipoNodo *lista){
     tipoDict *tmpInfo;
     while(p!=NULL){
             tmpInfo= &(p->info);
-            printf ("%s:%s\n", tmpInfo->palIngles,tmpInfo->palEspanol);
-            //fwrite(tmpInfo,sizeof(tipoDict),1,archivo_binario);
+            //printf ("%s:%s\n", tmpInfo->palIngles,tmpInfo->palEspanol);
+            fwrite(tmpInfo,sizeof(tipoDict),1,archivo_binario);
             sprintf(cadena,"<%s>:<%s>\n",tmpInfo->palIngles,tmpInfo->palEspanol);
-            //fputs(cadena,archivo_texto);//poner en el archivo texto
+            fputs(cadena,archivo_texto);//poner en el archivo texto
             p=p->siguiente;
     }
 
